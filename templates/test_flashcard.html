@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Play Flashcard</title>
+</head>
+<body>
+
+    <p>Test, question: {{ question }}</p>
+    <p>Test, answer: {{ answer }}</p>
+    <p>Test, Flashcard id: {{ flashcards_id }}</p>
+    <p>Test, Deck id: {{ deck_id }}</p>
+    <p>Test, user id: {{ user_id }}</p>
+    <p>Test, difficulty: {{ difficulty }}</p>
+    <h2>Create a New Deck</h2>
+    <form method="POST" >
+        <label for="user_id">User ID:</label>
+        <input type="number" id="user_id" name="user_id" value="{{ user_id }}"  readonly><br>
+        <label for="flashcards_id">Flashcard ID:</label>
+        <input type="number" id="flashcards_id" name="flashcards_id" value="{{ flashcards_id }}"  readonly><br>
+        <label for="question">Question:</label>
+        <input type="text" id="user_id" name="user_id" value="{{ question }}"  readonly><br>
+        <a href="{{ url_for('test2', answer=answer, flashcards_id=flashcards_id, user_id=user_id, deck_id=deck_id) }}"><button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Answer</button></a>
+    </form>
+    <a href="{{ url_for('deckdetails', user_id=user_id) }}">Back to Deck Details</a>
+
+
+
+</body>
+</html>

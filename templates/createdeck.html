@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Deck</title>
+</head>
+<body>
+
+    {% if user_id %}
+    <p>Welcome, User ID: {{ user_id }}</p>
+    {% endif %}
+    <h2>Create a New Deck</h2>
+    <form method="POST" action="/createdeck">
+        <label for="user_id">User ID:</label>
+        <input type="number" id="user_id" name="user_id" value="{{ user_id }}"  readonly><br>
+        <label for="deck_name">Deck Name:</label>
+        <input type="text" id="deck_name" name="deck_name" required><br>
+        <input type="submit" value="Create Deck">
+    </form>
+</body>
+</html>

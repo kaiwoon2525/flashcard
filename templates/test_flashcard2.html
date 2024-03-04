@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Deck</title>
+</head>
+<body>
+
+    <p>Test, question: {{ question }}</p>
+    <p>Test, answer: {{ answer }}</p>
+    <p>Test, id: {{ flashcards_id }}</p>
+    <p>Test, Deck id: {{ deck_id }}</p>
+    <h2>Create a New Deck</h2>
+    <!-- <form method="POST" >
+        <label for="user_id">User ID:</label>
+        <input type="number" id="user_id" name="user_id" value="{{ user_id }}"  readonly><br>
+        <label for="flashcards_id">Flashcard ID:</label>
+        <input type="number" id="flashcards_id" name="flashcards_id" value="{{ flashcards_id }}"  readonly><br>
+        <label for="question">Question:</label>
+        <input type="text" id="user_id" name="user_id" value="{{ question }}"  readonly><br> -->
+        <!-- <label for="user_id">Answer:</label>
+        <input type="text" id="user_id" name="user_id" value="{{ answer }}"  readonly><br>
+        <a href="{{ url_for('test', user_id = user_id, deck_id=deck_id) }}"><button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Easy</button></a>
+        <a href="{{ url_for('test', user_id = user_id, deck_id=deck_id) }}"><button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Good</button></a>
+        <a href="{{ url_for('test', user_id = user_id, deck_id=deck_id) }}"><button type="button" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold">Hard</button></a>
+    </form> -->
+
+
+
+    <form method="POST" action="{{ url_for('update_difficulty') }}">
+        <label for="user_id">User ID:</label>
+        <input type="number" id="user_id" name="user_id" value="{{ user_id }}" readonly><br>
+        <input type="hidden" id="flashcards_id" name="flashcards_id" value="{{ flashcards_id }}">
+        <input type="hidden" id="deck_id" name="deck_id" value="{{ deck_id }}">
+        <label for="user_id">Answer:</label>
+        <input type="text" id="user_id" name="user_id" value="{{ answer }}"  readonly><br> 
+        <input type="submit" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" name="difficulty" value="Easy">
+        <input type="submit" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" name="difficulty" value="Good">
+        <input type="submit" class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold" name="difficulty" value="Hard">
+    </form>
+    <a href="{{ url_for('deckdetails', user_id=user_id) }}">Back to Deck Details</a>
+
+</body>
+</html>

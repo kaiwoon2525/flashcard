@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Decks</title>
+</head>
+<body>
+    <h2>Your Decks</h2>
+
+    <table>
+        <tr>
+            <th>Deck ID</th>
+            <th>Deck Name</th>
+            <th>Create by User ID</th>
+            <th>Add</th>
+            <th>Edit</th>
+            <th>Play</th>
+            <th>Performance</th>
+            <th>Card details</th>
+        </tr>
+        {% for deck in user_decks %}
+        <tr>
+            <td>{{ deck[0] }}</td> <!-- Deck ID -->
+            <td>{{ deck[1] }}</td> <!-- Deck Name -->
+            <td>{{ deck[2] }}</td> <!-- Create by User ID -->
+            <td><a href="{{ url_for('create_flashcard', deck_id=deck[0], user_id=user_id) }}">Add</a></td>
+            <td><a href="#">Edit</a></td>
+            <td><a href="{{ url_for('test', deck_id=deck[0], user_id=user_id ) }}">Play</a></td>
+            <td><a href="{{ url_for('learning_performance', user_id=user_id, deck_id=deck[0] ) }}">Performance</a></td>
+            <td><a href="{{ url_for('card_details', deck_id=deck[0]) }}">Card Details</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    
+    <a href="/">Back to Home</a>
+
+
+</body>
+</html>

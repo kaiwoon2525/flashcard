@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example Sentences</title>
+</head>
+<body>
+    <h1>Example Sentences</h1>
+    {% if example_sentences %}
+    <ul>
+        {% for sentence in example_sentences %}
+            <li>{{ sentence }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No example sentences found for the provided keyword.</p>
+    {% endif %}
+</body>
+</html>
