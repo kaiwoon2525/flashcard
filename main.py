@@ -54,16 +54,16 @@ def go_login():
 def go_createuser():
     return render_template('createuser.html')
 
-@app.route('/go_webscraping', methods=['GET', 'POST'])
-def go_webscraping():
-    card_keyword = request.args.get('card_keyword', default=None, type=str)
-    # card_keyword = request.form['card_keyword']
-    # Check if card_keyword is None
-    if card_keyword is None:
-        flash("Please provide a keyword for web scraping.", 'error')
-        return redirect(url_for('index'))  # Redirect to the index page or any appropriate route
+# @app.route('/go_webscraping', methods=['GET', 'POST'])
+# def go_webscraping():
+#     card_keyword = request.args.get('card_keyword', default=None, type=str)
+
+#     # Check if card_keyword is None
+#     if card_keyword is None:
+#         flash("Please provide a keyword for web scraping.", 'error')
+#         return redirect(url_for('index'))  # Redirect to the index page or any appropriate route
     
-    return render_template('web_scraping.html', card_keyword=card_keyword)
+#     return render_template('web_scraping.html', card_keyword=card_keyword)
 
 
 @app.route('/createdeckpage', methods=['GET'])
@@ -147,7 +147,7 @@ def login():
         except Exception as ex:
             flash(f"An error occurred: {ex}", 'error')
 
-    return render_template('createdeck.html', user_id=user_id)
+    return render_template('login.html')
     
 
 @app.route('/create_flashcard', methods=['GET', 'POST'])
@@ -186,6 +186,7 @@ def create_flashcard():
 @app.route('/scrape', methods=['GET', 'POST'])
 def scrape():
     card_keyword = request.args.get('card_keyword', default=None, type=str)
+    user_id = request.args.get('user_id', default=None, type=int)
     
     if card_keyword is None:
         return "Please provide a keyword for web scraping."
@@ -203,76 +204,9 @@ def scrape():
             if keyword in paragraph.text:
                 unique_paragraphs.add(paragraph.text.strip())  # Add the stripped paragraph text to the set
         
-        return render_template('results.html', paragraphs=unique_paragraphs)
+        return render_template('results.html', paragraphs=unique_paragraphs, user_id=user_id)
     else:
         return "Failed to retrieve the web page."
-
-
-
-
-
-
-
-@app.route('/get_example_sentences')
-def get_example_sentences():
-    card_keyword = request.args.get('card_keyword', default=None, type=str)
-    api_key = "0cc019ec-d97e-4d25-a34f-23fdd73ff760"
-    if card_keyword:
-        example_sentences = fetch_example_sentences(api_key, card_keyword)
-        if example_sentences is not None:
-            return render_template('example_sentences.html', example_sentences=example_sentences)
-        else:
-            return "No example sentences found for the provided keyword."
-    else:
-        return "Please provide a keyword."
-
-def fetch_example_sentences(api_key, word):
-    url = f"https://www.dictionaryapi.com/api/v3/references/learners/json/{word}?key={api_key}"
-
-    try:
-        response = requests.get(url)
-        data = response.json()
-
-        if isinstance(data, list):
-            example_sentences = []
-            for entry in data:
-                if 'meta' in entry and 'id' in entry['meta'] and entry['meta']['id'] == word:
-                    if 'def' in entry:
-                        for definition in entry['def']:
-                            if 'sseq' in definition:
-                                for sseq in definition['sseq']:
-                                    for inner_list in sseq:
-                                        if isinstance(inner_list, list):
-                                            for item in inner_list:
-                                                if isinstance(item, list) and len(item) > 0:
-                                                    for sub_item in item:
-                                                        if isinstance(sub_item, dict) and 'dt' in sub_item:
-                                                            for dt_item in sub_item['dt']:
-                                                                if isinstance(dt_item, list):
-                                                                    for sub_dt_item in dt_item:
-                                                                        if isinstance(sub_dt_item, str):
-                                                                            example_sentences.append(sub_dt_item)
-            return example_sentences
-
-        return None  # No example sentences found
-
-    except requests.RequestException as e:
-        print("Error fetching data:", e)
-        return None
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -442,6 +376,7 @@ def learning_performance():
 @app.route('/card_details', methods=['GET', 'POST'])
 def card_details():
     deck_id = request.args.get('deck_id', default=None, type=int)
+    user_id = request.args.get('user_id', default=None, type=int)
     card_details = []
 
     try:
@@ -453,12 +388,12 @@ def card_details():
 
         cursor.close()
         conn.close()
-        return render_template('card_details.html', card_details=card_details)
+        return render_template('card_details.html', card_details=card_details, user_id=user_id)
                 
     except Exception as ex:
         flash(f"An error occurred: {ex}", 'error')
     
-    return render_template('card_details.html')
+    return render_template('card_details.html', user_id=user_id)
 
 
 
